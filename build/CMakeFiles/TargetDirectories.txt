@@ -1,0 +1,4 @@
+/home/gabe/dev-mode/book-order-engine/build/CMakeFiles/ob_core.dir
+/home/gabe/dev-mode/book-order-engine/build/CMakeFiles/order_book.dir
+/home/gabe/dev-mode/book-order-engine/build/CMakeFiles/edit_cache.dir
+/home/gabe/dev-mode/book-order-engine/build/CMakeFiles/rebuild_cache.dir
