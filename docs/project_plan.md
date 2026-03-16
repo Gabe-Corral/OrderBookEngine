@@ -15,11 +15,10 @@ The goals of this project is to learn low-latency systems:
 
 ### Setup Project
 
-- [ ] Project structure
-- [ ] CMake build
-- [ ] Configure compiler flags
+- [x ] CMake build
+- [ x] Configure compiler flags
 - [ ] Add unit testing (GoogleTest)
-- [ ] Create basic logging utility
+- [ x] Create basic logging utility
 - [ ] Create benchmarking harness
 
 
@@ -69,4 +68,3 @@ The goals of this project is to learn low-latency systems:
 - [ ] Process event stream
 - [ ] Print trades to stdout
 - [ ] Print final book state
-
