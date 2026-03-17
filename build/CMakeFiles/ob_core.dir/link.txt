@@ -1,2 +1,0 @@
-/usr/bin/ar qc libob_core.a CMakeFiles/ob_core.dir/src/util/logger.cpp.o
-/usr/bin/ranlib libob_core.a

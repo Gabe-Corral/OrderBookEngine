@@ -8,6 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(ob_core
     src/util/logger.cpp
+    src/book/order_book.cpp
 )
 
 target_include_directories(ob_core

@@ -1,29 +1,40 @@
-#include <string>
-#include <ob/util/logger.hpp>
 #include <ob/types/order.hpp>
+#include <ob/util/logger.hpp>
 
-using namespace ob::types;
-using ob::util::Logger;
+#include <string>
+
+namespace {
+
+const char* to_string(ob::types::Side side)
+{
+    switch (side) {
+        case ob::types::Side::Buy:
+            return "BUY";
+        case ob::types::Side::Sell:
+            return "SELL";
+    }
+
+    return "UNKNOWN";
+}
+
+}
 
 int main()
 {
-    Order order{
+    const ob::types::Order order{
         .id = 1,
-        .side = Side::Buy,
-        .price = 125,
+        .side = ob::types::Side::Buy,
+        .price = 10125,
         .quantity = 10
     };
 
-    const char* side_str = order.side == Side::Buy ? "BUY" : "SELL";
+    ob::util::Logger::info("Created order");
 
-    Logger::info(
-        "Order details\n id: " +
-        std::to_string(order.id) +
-        " side: " + side_str +
-        " price: " +
-        std::to_string(order.price) +
-        " qty: " +
-        std::to_string(order.quantity)
+    ob::util::Logger::info(
+        std::string("order_id=") + std::to_string(order.id) +
+        " side=" + to_string(order.side) +
+        " price=" + std::to_string(order.price) +
+        " quantity=" + std::to_string(order.quantity)
     );
 
     return 0;
