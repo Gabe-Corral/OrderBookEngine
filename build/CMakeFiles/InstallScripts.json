@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/gabe/dev-mode/book-order-engine/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
