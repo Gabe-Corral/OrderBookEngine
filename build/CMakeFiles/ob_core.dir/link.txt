@@ -1,2 +1,2 @@
-/usr/bin/ar qc libob_core.a CMakeFiles/ob_core.dir/src/util/logger.cpp.o
+/usr/bin/ar qc libob_core.a CMakeFiles/ob_core.dir/src/util/logger.cpp.o CMakeFiles/ob_core.dir/src/book/order_book.cpp.o
 /usr/bin/ranlib libob_core.a

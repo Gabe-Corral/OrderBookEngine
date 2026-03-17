@@ -142,6 +142,30 @@ order_book/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/order_book.dir/build.make CMakeFiles/order_book.dir/build
 .PHONY : order_book/fast
 
+src/book/order_book.o: src/book/order_book.cpp.o
+.PHONY : src/book/order_book.o
+
+# target to build an object file
+src/book/order_book.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ob_core.dir/build.make CMakeFiles/ob_core.dir/src/book/order_book.cpp.o
+.PHONY : src/book/order_book.cpp.o
+
+src/book/order_book.i: src/book/order_book.cpp.i
+.PHONY : src/book/order_book.i
+
+# target to preprocess a source file
+src/book/order_book.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ob_core.dir/build.make CMakeFiles/ob_core.dir/src/book/order_book.cpp.i
+.PHONY : src/book/order_book.cpp.i
+
+src/book/order_book.s: src/book/order_book.cpp.s
+.PHONY : src/book/order_book.s
+
+# target to generate assembly for a file
+src/book/order_book.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ob_core.dir/build.make CMakeFiles/ob_core.dir/src/book/order_book.cpp.s
+.PHONY : src/book/order_book.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -200,6 +224,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... ob_core"
 	@echo "... order_book"
+	@echo "... src/book/order_book.o"
+	@echo "... src/book/order_book.i"
+	@echo "... src/book/order_book.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

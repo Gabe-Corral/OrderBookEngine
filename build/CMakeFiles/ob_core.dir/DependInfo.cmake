@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/gabe/dev-mode/book-order-engine/src/book/order_book.cpp" "CMakeFiles/ob_core.dir/src/book/order_book.cpp.o" "gcc" "CMakeFiles/ob_core.dir/src/book/order_book.cpp.o.d"
   "/home/gabe/dev-mode/book-order-engine/src/util/logger.cpp" "CMakeFiles/ob_core.dir/src/util/logger.cpp.o" "gcc" "CMakeFiles/ob_core.dir/src/util/logger.cpp.o.d"
   )
 

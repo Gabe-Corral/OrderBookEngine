@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ob_core.dir/src/book/order_book.cpp.o"
+  "CMakeFiles/ob_core.dir/src/book/order_book.cpp.o.d"
   "CMakeFiles/ob_core.dir/src/util/logger.cpp.o"
   "CMakeFiles/ob_core.dir/src/util/logger.cpp.o.d"
   "libob_core.a"

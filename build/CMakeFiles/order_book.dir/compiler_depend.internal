@@ -3,6 +3,7 @@
 
 CMakeFiles/order_book.dir/src/main.cpp.o
  /home/gabe/dev-mode/book-order-engine/src/main.cpp
+ /home/gabe/dev-mode/book-order-engine/include/ob/book/order_node.hpp
  /home/gabe/dev-mode/book-order-engine/include/ob/types/order.hpp
  /home/gabe/dev-mode/book-order-engine/include/ob/types/order_id.hpp
  /home/gabe/dev-mode/book-order-engine/include/ob/types/price.hpp

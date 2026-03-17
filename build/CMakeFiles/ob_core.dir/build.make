@@ -86,17 +86,33 @@ CMakeFiles/ob_core.dir/src/util/logger.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ob_core.dir/src/util/logger.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/gabe/dev-mode/book-order-engine/src/util/logger.cpp -o CMakeFiles/ob_core.dir/src/util/logger.cpp.s
 
+CMakeFiles/ob_core.dir/src/book/order_book.cpp.o: CMakeFiles/ob_core.dir/flags.make
+CMakeFiles/ob_core.dir/src/book/order_book.cpp.o: /home/gabe/dev-mode/book-order-engine/src/book/order_book.cpp
+CMakeFiles/ob_core.dir/src/book/order_book.cpp.o: CMakeFiles/ob_core.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/gabe/dev-mode/book-order-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ob_core.dir/src/book/order_book.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ob_core.dir/src/book/order_book.cpp.o -MF CMakeFiles/ob_core.dir/src/book/order_book.cpp.o.d -o CMakeFiles/ob_core.dir/src/book/order_book.cpp.o -c /home/gabe/dev-mode/book-order-engine/src/book/order_book.cpp
+
+CMakeFiles/ob_core.dir/src/book/order_book.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ob_core.dir/src/book/order_book.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/gabe/dev-mode/book-order-engine/src/book/order_book.cpp > CMakeFiles/ob_core.dir/src/book/order_book.cpp.i
+
+CMakeFiles/ob_core.dir/src/book/order_book.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ob_core.dir/src/book/order_book.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/gabe/dev-mode/book-order-engine/src/book/order_book.cpp -o CMakeFiles/ob_core.dir/src/book/order_book.cpp.s
+
 # Object files for target ob_core
 ob_core_OBJECTS = \
-"CMakeFiles/ob_core.dir/src/util/logger.cpp.o"
+"CMakeFiles/ob_core.dir/src/util/logger.cpp.o" \
+"CMakeFiles/ob_core.dir/src/book/order_book.cpp.o"
 
 # External object files for target ob_core
 ob_core_EXTERNAL_OBJECTS =
 
 libob_core.a: CMakeFiles/ob_core.dir/src/util/logger.cpp.o
+libob_core.a: CMakeFiles/ob_core.dir/src/book/order_book.cpp.o
 libob_core.a: CMakeFiles/ob_core.dir/build.make
 libob_core.a: CMakeFiles/ob_core.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/gabe/dev-mode/book-order-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libob_core.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/gabe/dev-mode/book-order-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libob_core.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/ob_core.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ob_core.dir/link.txt --verbose=$(VERBOSE)
 
