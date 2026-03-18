@@ -1,10 +1,9 @@
 #include <ob/util/logger.hpp>
 
 #include <chrono>
+#include <cstdio>
 #include <ctime>
-#include <iomanip>
 #include <iostream>
-#include <sstream>
 
 namespace ob::util {
 
@@ -13,10 +12,11 @@ namespace {
 const char* to_string(LogLevel level)
 {
     switch (level) {
-        case LogLevel::Info: return "INFO";
+        case LogLevel::Info:    return "INFO";
         case LogLevel::Warning: return "WARN";
-        case LogLevel::Error: return "ERROR";
+        case LogLevel::Error:   return "ERROR";
     }
+
     return "UNKNOWN";
 }
 
@@ -25,25 +25,25 @@ const char* base_name(const char* path)
     const char* file = path;
 
     for (const char* p = path; *p != '\0'; ++p) {
-        if (*p == '/' || *p == '\\')
+        if (*p == '/' || *p == '\\') {
             file = p + 1;
+        }
     }
 
     return file;
 }
 
-std::string cached_timestamp;
+char cached_timestamp[20]{};
 std::time_t last_second = 0;
 
-const std::string& get_timestamp()
+const char* get_timestamp()
 {
     using namespace std::chrono;
 
-    auto now = system_clock::now();
-    auto seconds = system_clock::to_time_t(now);
+    const auto now = system_clock::now();
+    const auto seconds = system_clock::to_time_t(now);
 
-    if (seconds != last_second)
-    {
+    if (seconds != last_second) {
         last_second = seconds;
 
         std::tm tm{};
@@ -53,10 +53,12 @@ const std::string& get_timestamp()
         localtime_r(&seconds, &tm);
 #endif
 
-        std::ostringstream oss;
-        oss << std::put_time(&tm, "%F %T");
-
-        cached_timestamp = oss.str();
+        std::strftime(
+            cached_timestamp,
+            sizeof(cached_timestamp),
+            "%Y-%m-%d %H:%M:%S",
+            &tm
+        );
     }
 
     return cached_timestamp;
@@ -64,17 +66,23 @@ const std::string& get_timestamp()
 
 }
 
-void Logger::info(std::string_view message, const std::source_location& location)
+void Logger::info(
+    std::string_view message,
+    const std::source_location& location)
 {
     log(LogLevel::Info, message, location);
 }
 
-void Logger::warn(std::string_view message, const std::source_location& location)
+void Logger::warn(
+    std::string_view message,
+    const std::source_location& location)
 {
     log(LogLevel::Warning, message, location);
 }
 
-void Logger::error(std::string_view message, const std::source_location& location)
+void Logger::error(
+    std::string_view message,
+    const std::source_location& location)
 {
     log(LogLevel::Error, message, location);
 }
@@ -90,9 +98,12 @@ void Logger::log(
         << " | "
         << base_name(location.file_name())
         << ":" << location.line()
-        << " | "
-        << message
-        << '\n';
+        << " | ";
+
+    std::cout.write(message.data(),
+                    static_cast<std::streamsize>(message.size()));
+
+    std::cout << '\n';
 }
 
 }

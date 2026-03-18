@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <unordered_map>
+#include <optional>
 
 #include <ob/book/order_node.hpp>
 #include <ob/book/price_level.hpp>
@@ -27,6 +28,10 @@ public:
     void add_order(const ob::types::Order& order);
     bool cancel_order(ob::types::OrderId id);
 
+    std::optional<ob::types::Price> best_bid() const;
+    std::optional<ob::types::Price> best_ask() const;
+    void log_top_of_book() const;
+
 private:
     using BidLevels =
         std::map<
@@ -48,8 +53,16 @@ private:
 
     void append_to_level_(PriceLevel& level, OrderNode& node);
     void remove_from_level_(PriceLevel& level, OrderNode& node);
-
     void erase_level_if_empty_(const ob::types::Order& order);
+
+    void match_buy_order_(ob::types::Order& incoming);
+    void match_sell_order_(ob::types::Order& incoming);
+    void rest_order_(const ob::types::Order& order);
+
+    void log_trade_(const ob::types::Order& incoming,
+                    const ob::types::Order& resting,
+                    ob::types::Quantity traded_quantity,
+                    ob::types::Price trade_price) const;
 
     BidLevels bids_;
     AskLevels asks_;
