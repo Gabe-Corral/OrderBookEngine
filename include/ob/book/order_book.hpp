@@ -11,6 +11,7 @@
 #include <ob/types/order.hpp>
 #include <ob/types/order_id.hpp>
 #include <ob/types/price.hpp>
+#include <ob/types/trade.hpp>
 
 namespace ob::book {
 
@@ -25,11 +26,17 @@ public:
     OrderBook(OrderBook&&) = delete;
     OrderBook& operator=(OrderBook&&) = delete;
 
-    void add_order(const ob::types::Order& order);
+    std::vector<ob::types::Trade> add_order(const ob::types::Order& order);
     bool cancel_order(ob::types::OrderId id);
 
     std::optional<ob::types::Price> best_bid() const;
     std::optional<ob::types::Price> best_ask() const;
+
+    bool has_order(ob::types::OrderId id) const;
+
+    std::optional<ob::types::Quantity> bid_quantity_at(ob::types::Price price) const;
+    std::optional<ob::types::Quantity> ask_quantity_at(ob::types::Price price) const;
+
     void log_top_of_book() const;
 
 private:
@@ -55,8 +62,11 @@ private:
     void remove_from_level_(PriceLevel& level, OrderNode& node);
     void erase_level_if_empty_(const ob::types::Order& order);
 
-    void match_buy_order_(ob::types::Order& incoming);
-    void match_sell_order_(ob::types::Order& incoming);
+    void match_buy_order_(ob::types::Order& incoming,
+                          std::vector<ob::types::Trade>& trades);
+
+    void match_sell_order_(ob::types::Order& incoming,
+                           std::vector<ob::types::Trade>& trades);
     void rest_order_(const ob::types::Order& order);
 
     void log_trade_(const ob::types::Order& incoming,

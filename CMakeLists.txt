@@ -45,3 +45,10 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
             -Wconversion
     )
 endif()
+
+option(OB_ENABLE_TESTS "Enable tests" ON)
+
+if (OB_ENABLE_TESTS)
+	enable_testing()
+    add_subdirectory(tests)
+endif()

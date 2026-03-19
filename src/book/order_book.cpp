@@ -4,6 +4,7 @@
 #include <optional>
 
 #include <ob/types/side.hpp>
+#include <ob/types/trade.hpp>
 #include <ob/util/logger.hpp>
 
 namespace ob::book {
@@ -46,23 +47,28 @@ OrderBook::~OrderBook()
     }
 }
 
-void OrderBook::add_order(const ob::types::Order& order)
+std::vector<ob::types::Trade>
+OrderBook::add_order(const ob::types::Order& order)
 {
     if (order_index_.contains(order.id)) {
         throw std::runtime_error("duplicate order id");
     }
 
+    std::vector<ob::types::Trade> trades;
+
     ob::types::Order incoming = order;
 
     if (incoming.side == ob::types::Side::Buy) {
-        match_buy_order_(incoming);
+        match_buy_order_(incoming, trades);
     } else {
-        match_sell_order_(incoming);
+        match_sell_order_(incoming, trades);
     }
 
     if (incoming.quantity > 0) {
         rest_order_(incoming);
     }
+
+    return trades;
 }
 
 bool OrderBook::cancel_order(ob::types::OrderId id)
@@ -222,7 +228,8 @@ void OrderBook::rest_order_(const ob::types::Order& order)
     order_index_.emplace(order.id, node);
 }
 
-void OrderBook::match_buy_order_(ob::types::Order& incoming)
+void OrderBook::match_buy_order_(ob::types::Order& incoming,
+                      std::vector<ob::types::Trade>& trades)
 {
     while (incoming.quantity > 0 && !asks_.empty()) {
         auto best_ask_it = asks_.begin();
@@ -241,7 +248,12 @@ void OrderBook::match_buy_order_(ob::types::Order& incoming)
         const auto traded =
             std::min(incoming.quantity, resting->order.quantity);
 
-        log_trade_(incoming, resting->order, traded, level.price);
+        trades.push_back(ob::types::Trade{
+            .incoming_order_id = incoming.id,
+            .resting_order_id = resting->order.id,
+            .price = level.price,
+            .quantity = traded
+        });
 
         incoming.quantity -= traded;
         resting->order.quantity -= traded;
@@ -259,7 +271,8 @@ void OrderBook::match_buy_order_(ob::types::Order& incoming)
     }
 }
 
-void OrderBook::match_sell_order_(ob::types::Order& incoming)
+void OrderBook::match_sell_order_(ob::types::Order& incoming,
+                       std::vector<ob::types::Trade>& trades)
 {
     while (incoming.quantity > 0 && !bids_.empty()) {
         auto best_bid_it = bids_.begin();
@@ -278,7 +291,12 @@ void OrderBook::match_sell_order_(ob::types::Order& incoming)
         const auto traded =
             std::min(incoming.quantity, resting->order.quantity);
 
-        log_trade_(incoming, resting->order, traded, level.price);
+        trades.push_back(ob::types::Trade{
+            .incoming_order_id = incoming.id,
+            .resting_order_id = resting->order.id,
+            .price = level.price,
+            .quantity = traded
+        });
 
         incoming.quantity -= traded;
         resting->order.quantity -= traded;
@@ -294,6 +312,32 @@ void OrderBook::match_sell_order_(ob::types::Order& incoming)
             erase_level_if_empty_(filled_order);
         }
     }
+}
+
+// NOTE: do we need this?
+bool OrderBook::has_order(ob::types::OrderId id) const
+{
+    return order_index_.contains(id);
+}
+
+std::optional<ob::types::Quantity> OrderBook::bid_quantity_at(ob::types::Price price) const
+{
+    const auto it = bids_.find(price);
+    if (it == bids_.end()) {
+        return std::nullopt;
+    }
+
+    return it->second->total_quantity;
+}
+
+std::optional<ob::types::Quantity> OrderBook::ask_quantity_at(ob::types::Price price) const
+{
+    const auto it = asks_.find(price);
+    if (it == asks_.end()) {
+        return std::nullopt;
+    }
+
+    return it->second->total_quantity;
 }
 
 void OrderBook::log_trade_(const ob::types::Order& incoming,
